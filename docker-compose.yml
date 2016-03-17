@@ -1,46 +1,51 @@
 nginx:
-    build: ./nginx
+    #build: ./nginx
+    image: daocloud.io/noprom/noprom-nginx:latest
     ports:
       - "80:80"
     links:
       - "php"
     volumes:
-      - ~/opt:/opt
+      - /app:/app
 
 php:
-    build: ./php
+    #build: ./php
+    image: daocloud.io/noprom/noprom-php:latest
     ports:
       - "9000:9000"
     links:
       - "mysql"
       - "memcache"
       - "redis"
-      - "gearman"
+      #- "gearman"
     volumes:
-      - ~/opt:/opt
+      - /app:/app
 
 mysql:
-    build: ./mysql
+    #build: ./mysql
+    image: daocloud.io/noprom/noprom-mysql:latest
     ports:
       - "3306:3306"
     volumes:
-      - ~/opt/data/mysql:/var/lib/mysql
+      - /app/data/mysql:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_ROOT_PASSWORD: 1q2w3e4r5t
 
 memcache:
-    build: ./memcache
+    #build: ./memcache
+    image: daocloud.io/noprom/noprom-memcache:latest
     ports:
       - "11211:11211"
 
 redis:
-    build: ./redis
+    #build: ./redis
+    image: daocloud.io/noprom/noprom-redis:latest
     ports:
       - "6379:6379"
 
-gearman:
-    build: ./gearman
-    ports:
-      - "4730:4730"
-    volumes:
-      - ~/opt:/opt
+#gearman:
+#    build: ./gearman
+#    ports:
+#     - "4730:4730"
+#   volumes:
+#     - /app:/app
