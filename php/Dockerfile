@@ -4,6 +4,7 @@ FROM php:5.6-fpm
 ADD sources.list    /etc/apt/sources.list
 RUN apt-get update && apt-get install -y \
         git \
+        vim \
         libgearman-dev \
         libmemcached-dev \
         libmcrypt-dev \
@@ -22,7 +23,7 @@ COPY xdebug.tgz /home/xdebug.tgz
 COPY memcache.tgz /home/memcache.tgz
 COPY xhprof.tgz /home/xhprof.tgz
 COPY cphalcon.tgz /home/cphalcon.tgz
-COPY pdo_mysql.tgz /home/pdo_mysql.tgz
+#COPY pdo_mysql.tgz /home/pdo_mysql.tgz
 
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
         && docker-php-ext-install zip \
@@ -36,7 +37,7 @@ RUN pecl install /home/memcached.tgz && echo "extension=memcached.so" > /usr/loc
         && pecl install /home/msgpack.tgz && echo "extension=msgpack.so" > /usr/local/etc/php/conf.d/msgpack.ini \
         && pecl install /home/memcache.tgz && echo "extension=memcache.so" > /usr/local/etc/php/conf.d/memcache.ini \
         && pecl install /home/xhprof.tgz && echo "extension=xhprof.so" > /usr/local/etc/php/conf.d/xhprof.ini \
-        && pecl install /home/pdo_mysql.tgz && echo "extension=pdo_mysql.so" > /usr/local/etc/php/conf.d/pdo_mysql.ini \
+        #&& pecl install /home/pdo_mysql.tgz && echo "extension=pdo_mysql.so" > /usr/local/etc/php/conf.d/pdo_mysql.ini \
         && pecl install /home/xdebug.tgz && echo "zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-20131226/xdebug.so" > /usr/local/etc/php/conf.d/xdebug.ini
 RUN cd /home \
     && tar -xvf cphalcon.tgz \
